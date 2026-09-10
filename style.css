@@ -99,20 +99,28 @@ nav {
     position: relative;
 }
 
-.logo {
-    color: white;
-    font-size: 24px;
-    font-weight: 700;
+/* ===== LOGO (FIXED) ===== */
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
 }
 
-.logo::after {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background: #0284c7;
+.logo-img {
+    height: 50px;
+    width: 50px;
     border-radius: 50%;
-    margin-left: 4px;
+    object-fit: cover;
+    border: 2px solid #0284c7;
+    display: block;
+    background: #1f2937;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 15px rgba(2, 132, 199, 0.6);
 }
 
 nav ul {
@@ -880,6 +888,10 @@ footer {
     border-color: #0284c7;
 }
 
+.dark-mode .logo-img {
+    background: #0f172a;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
     .services-grid,
@@ -894,6 +906,11 @@ footer {
         display: block;
     }
 
+    .logo-img {
+        height: 42px;
+        width: 42px;
+    }
+
     nav ul {
         display: none;
         flex-direction: column;
@@ -905,6 +922,7 @@ footer {
         top: 100%;
         left: 0;
         gap: 10px;
+        margin-top: 15px;
     }
 
     nav ul.active {
