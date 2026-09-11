@@ -7,13 +7,17 @@ const contactBtn = document.getElementById('contactBtn');
 const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
 
+
 // ===== Mobile Menu Toggle =====
 menuBtn.addEventListener('click', () => {
     navLinks.classList.toggle('active');
-    menuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+
+    menuBtn.textContent =
+        navLinks.classList.contains('active') ? '✕' : '☰';
 });
 
-// Close menu when clicking outside
+
+// ===== Close Menu When Clicking Outside =====
 document.addEventListener('click', (e) => {
     if (!e.target.closest('nav')) {
         navLinks.classList.remove('active');
@@ -21,7 +25,8 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Close menu when clicking a link
+
+// ===== Close Menu When Clicking a Link =====
 document.querySelectorAll('#navLinks a').forEach(link => {
     link.addEventListener('click', () => {
         navLinks.classList.remove('active');
@@ -29,115 +34,197 @@ document.querySelectorAll('#navLinks a').forEach(link => {
     });
 });
 
+
 // ===== Dark Mode Toggle =====
 darkModeBtn.addEventListener('click', () => {
+
     document.body.classList.toggle('dark-mode');
-    
-    // Update button icon
+
     if (document.body.classList.contains('dark-mode')) {
+
         darkModeBtn.textContent = '☀️';
+
         localStorage.setItem('darkMode', 'enabled');
+
     } else {
+
         darkModeBtn.textContent = '🌙';
+
         localStorage.setItem('darkMode', 'disabled');
     }
 });
 
-// Load dark mode preference
+
+// ===== Load Dark Mode Preference =====
 if (localStorage.getItem('darkMode') === 'enabled') {
+
     document.body.classList.add('dark-mode');
+
     darkModeBtn.textContent = '☀️';
 }
 
-// ===== Scroll Buttons =====
+
+// ===== View My Work Button =====
 workBtn.addEventListener('click', () => {
+
     document.getElementById('projects').scrollIntoView({
         behavior: 'smooth'
     });
+
 });
 
+
+// ===== Contact Me Button =====
 contactBtn.addEventListener('click', () => {
+
     document.getElementById('contact').scrollIntoView({
         behavior: 'smooth'
     });
+
 });
 
-// ===== Contact Form =====
+
+// ===== Contact Form Validation =====
 contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const subject = document.getElementById('subject').value.trim();
-    const message = document.getElementById('message').value.trim();
-    
-    // Validate
+
+    const name =
+        document.getElementById('name').value.trim();
+
+    const email =
+        document.getElementById('email').value.trim();
+
+    const message =
+        document.getElementById('message').value.trim();
+
+
+    // ===== Required Fields Validation =====
     if (!name || !email || !message) {
-        formStatus.textContent = '⚠️ Please fill in all required fields.';
-        formStatus.className = 'form-status error';
+
+        e.preventDefault();
+
+        formStatus.textContent =
+            '⚠️ Please fill in all required fields.';
+
+        formStatus.className =
+            'form-status error';
+
         return;
     }
-    
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    // ===== Email Validation =====
+    const emailRegex =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
     if (!emailRegex.test(email)) {
-        formStatus.textContent = '⚠️ Please enter a valid email address.';
-        formStatus.className = 'form-status error';
+
+        e.preventDefault();
+
+        formStatus.textContent =
+            '⚠️ Please enter a valid email address.';
+
+        formStatus.className =
+            'form-status error';
+
         return;
     }
-    
-    // Success message
-    formStatus.textContent = `✅ Thank you ${name}! Your message has been sent successfully.`;
-    formStatus.className = 'form-status';
-    formStatus.style.color = '#0284c7';
-    
-    // Reset form
-    contactForm.reset();
-    
-    // Clear status after 5 seconds
-    setTimeout(() => {
-        formStatus.textContent = '';
-    }, 5000);
+
+
+    // ===== Allow FormSubmit =====
+    // اگر تمام معلومات درست ہیں تو
+    // FormSubmit کو form submit کرنے دیں۔
+
 });
 
-// ===== Scroll Animation (Optional) =====
-// Intersection Observer for skill bars
-const skillBars = document.querySelectorAll('.skill-bar span');
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const bar = entry.target;
-            const width = bar.style.width;
-            bar.style.width = '0%';
-            setTimeout(() => {
-                bar.style.width = width;
-            }, 100);
-        }
+// ===== Skill Bar Animation =====
+const skillBars =
+    document.querySelectorAll('.skill-bar span');
+
+
+const observer =
+    new IntersectionObserver((entries) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                const bar = entry.target;
+
+                const width =
+                    bar.style.width;
+
+                bar.style.width = '0%';
+
+                setTimeout(() => {
+
+                    bar.style.width = width;
+
+                }, 100);
+            }
+        });
+
+    }, {
+        threshold: 0.5
     });
-}, { threshold: 0.5 });
 
-skillBars.forEach(bar => observer.observe(bar));
 
-// ===== Smooth reveal for cards =====
-const cards = document.querySelectorAll('.skill-card, .service-card, .project-card, .about-card');
+skillBars.forEach(bar => {
 
-const cardObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
+    observer.observe(bar);
+
+});
+
+
+// ===== Card Reveal Animation =====
+const cards =
+    document.querySelectorAll(
+        '.skill-card, .service-card, .project-card, .about-card'
+    );
+
+
+const cardObserver =
+    new IntersectionObserver((entries) => {
+
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                entry.target.style.opacity = '1';
+
+                entry.target.style.transform =
+                    'translateY(0)';
+            }
+        });
+
+    }, {
+        threshold: 0.1
     });
-}, { threshold: 0.1 });
+
 
 cards.forEach(card => {
+
     card.style.opacity = '0';
-    card.style.transform = 'translateY(30px)';
-    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
+    card.style.transform =
+        'translateY(30px)';
+
+    card.style.transition =
+        'opacity 0.6s ease, transform 0.6s ease';
+
     cardObserver.observe(card);
+
 });
 
+
 // ===== Console Greeting =====
-console.log('%c👋 Welcome to Assad Ali\'s Portfolio!', 'font-size: 20px; font-weight: bold; color: #0284c7;');
-console.log('%c🚀 Front-End Web Developer', 'font-size: 14px; color: #0ea5e9;');
+console.log(
+    '%c👋 Welcome to Assad Ali\'s Portfolio!',
+    'font-size: 20px; font-weight: bold; color: #0284c7;'
+);
+
+console.log(
+    '%c🚀 Front-End Web Developer',
+    'font-size: 14px; color: #0ea5e9;'
+);
