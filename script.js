@@ -107,7 +107,6 @@ contactForm.addEventListener('submit', (e) => {
 
         formStatus.className =
             'form-status error';
-
         return;
     }
 

@@ -325,46 +325,18 @@
       class="contact-form"
       action="https://formsubmit.co/asssadsheeno110@gmail.com"
       method="POST">
-
     <h3>Send a Message</h3>
+    <input type="text" id="name" name="name" placeholder="Your Name" required>
+    <input type="email" id="email" name="email" placeholder="Your Email" required>
+    <input type="text" id="subject" name="subject" placeholder="Subject">
+    <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
 
-    <input
-        type="text"
-        id="name"
-        name="name"
-        placeholder="Your Name"
-        required
-    >
+    <input type="hidden" name="_subject" value="New Portfolio Contact Message">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
 
-    <input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="Your Email"
-        required
-    >
-
-    <input
-        type="text"
-        id="subject"
-        name="subject"
-        placeholder="Subject"
-    >
-
-    <textarea
-        id="message"
-        name="message"
-        rows="5"
-        placeholder="Your Message"
-        required
-    ></textarea>
-
-    <button type="submit" class="btn-primary">
-        Send Message ✉️
-    </button>
-
+    <button type="submit" class="btn-primary">Send Message ✉️</button>
     <p id="formStatus" class="form-status"></p>
-
 </form>
                 </div>
             </div>
